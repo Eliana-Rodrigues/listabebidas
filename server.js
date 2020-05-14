@@ -1,37 +1,38 @@
-const express = require('express');
+const express= require('express');
 
 const server = express();
 
 server.use(express.json()); 
 
-const produtos = [
-    { nome: 'Vinho', quantidade:5},
-    { nome: 'Whisky', quantidade:3}
+const bebidas = [
+    { bebida: 'Vinho', marca: 'San_German', valor: 18.00 , quantidade:10},
+    { bebida: 'Whisky', marca: 'Red_Label', valor: 90.00, quantidade:3},
+    { bebida: 'Refrigerante', marca: 'Coca-Cola', valor: 6.00, quantidade:15},
+    { bebida: 'Suco', marca: 'Kmais', valor:10.00, quantidade:9},
+    { bebida: 'Cerveja', marca: 'Skol', valor:4.00, quantidade:20},
 ]
 
-server.get('/produto', function(request, response) {
-    response.json(produtos);
+server.get('/bebidas', function(request, response) {
+    response.json(bebidas);
 })
 
-server.post('/produto', function(request, response) {
+server.post('/bebidas', function(request, response) {
+     const {bebida, valor, marca, quantidade} = request.body;
 
-    //const nome = request.body.nome;
-    //const quantidade = request.body.quantidade;
-
-    const {nome, quantidade} = request.body;
-
-    produtos.push({nome, quantidade});
+    bebidas.push({bebida, valor, marca, quantidade});
     response.status(204).send();
 })
 
-server.put('/produto/:id', function(request, response) {
+server.put('/bebida/:id', function(request, response) {
     const id = request.params.id;
-    const {nome, quantidade} = request.body; 
+    const {bebida, valor, marca, quantidade} = request.body; 
 
-    for(let i = 0; i < produtos.length; i++) {
-        if(produtos [i].nome == id) {
-            produtos[i].nome = nome;
-            produtos[i].quantidade = quantidade;
+    for(let i = 0; i < bebidas.length; i++) {
+        if(bebidas [i].bebida == id) {
+            bebidas[i].bebida = bebida;
+            bebidas[i].valor = valor;
+             bebidas[i].marca =marca;
+            bebidas[i].quantidade = quantidade;
             break;  
         }
     }
@@ -39,13 +40,13 @@ server.put('/produto/:id', function(request, response) {
     return response.status(204).send();
 }) 
 
-server.delete('/produto/:id', function(request, response) {
+server.delete('/bebida/:id', function(request, response) {
 
     const id = request.params.id
 
-    for(let i = 0; i < produtos.length; i++) {
-        if(produtos [i].nome == id) {
-            produtos.splice(i, 1);
+    for(let i = 0; i < bebidas.length; i++) {
+        if(bebidas [i].bebida == id) {
+            bebidas.splice(i, 1);
             break;
         }
     }
